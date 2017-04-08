@@ -7,9 +7,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -74,15 +72,54 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
 
         return jobs;
     }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        loadData();
+        //TODO
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        if (value.equals("")) {
+            return jobs;
+        }
+        ArrayList<HashMap<String, String>> full = JobData.findAll();
+        for (HashMap<String, String>job : full) {
+
+            String name = job.get("name").toLowerCase();
+            String employer = job.get("employer").toLowerCase();
+            String position = job.get("position type").toLowerCase();
+            String location = job.get("location").toLowerCase();
+            String skill = job.get("core competency").toLowerCase();
+
+
+
+            if (name.contains(value.toLowerCase())) {
+                jobs.add(job);
+            } else if (employer.contains(value.toLowerCase())) {
+                jobs.add(job);
+            } else if (position.contains(value.toLowerCase())) {
+                jobs.add(job);
+            } else if (location.contains(value.toLowerCase())) {
+                jobs.add(job);
+            } else if (skill.contains(value.toLowerCase())) {
+                jobs.add(job);
+            }
+        }
+
+
+        return jobs;
+    }
+
+
 
     /**
      * Read in data from a CSV file and store it in a list
